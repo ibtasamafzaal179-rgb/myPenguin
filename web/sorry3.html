@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Small Penguin 🐧</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght=500;700&family=Dancing+Script:wght=600&family=Caveat:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #1a0b1a;
+            --purple-main: #3d153d;
+            --accent-pink: #ff4d8d;
+            --glass: rgba(255, 255, 255, 0.1);
+            --card-glass: rgba(58, 26, 58, 0.7);
+            --text-main: #ffd1dc;
+            --btn-pink-start: #ff6b8e;
+            --btn-pink-end: #ff8fa1;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: radial-gradient(circle at center, var(--purple-main), var(--bg-dark));
+            font-family: 'Quicksand', sans-serif;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Classic Italian cursive handwriting style */
+        .italian-handwriting {
+            font-family: 'Dancing Script', cursive !important;
+            font-style: italic;
+        }
+
+        /* Starry background effect */
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: twinkle 3s infinite alternate;
+        }
+        @keyframes twinkle { from { opacity: 0.1; } to { opacity: 0.6; } }
+
+        .bg-emoji {
+            position: absolute;
+            font-size: 1.5rem;
+            opacity: 0.2;
+            z-index: 0;
+            animation: drift 10s infinite linear;
+            user-select: none;
+            pointer-events: none;
+        }
+
+        @keyframes drift {
+            from { transform: translateY(110vh) rotate(0deg); }
+            to { transform: translateY(-10vh) rotate(360deg); }
+        }
+
+        .screen {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+            animation: fadeIn 0.8s ease-in-out;
+            z-index: 1;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .hidden { display: none !important; }
+
+        .cute-img { width: 500px; max-width: 80%; margin-bottom: 20px; border-radius: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+        
+        h1 { 
+            font-family: 'Caveat', cursive;
+            font-size: 2.8rem; 
+            margin-bottom: 30px; 
+            color: var(--accent-pink);
+            text-shadow: 0 0 10px rgba(255, 77, 141, 0.5);
+        }
+
+        .btn {
+            background: var(--accent-pink);
+            color: white;
+            border: none;
+            padding: 12px 35px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 0 15px rgba(255, 77, 141, 0.4);
+            font-family: 'Quicksand', sans-serif;
+            z-index: 10;
+        }
+
+        .btn:hover { transform: scale(1.1); background: #ff6b8e; }
+
+        .progress-container { width: 80%; max-width: 300px; margin-top: 20px; background: rgba(255,255,255,0.1); border-radius: 10px;}
+        .progress-bar {
+            height: 10px;
+            width: 0%;
+            background: var(--accent-pink);
+            border-radius: 10px;
+            box-shadow: 0 0 10px var(--accent-pink);
+        }
+        #percentage { font-size: 3.5rem; font-weight: 700; }
+
+        .reveal-box {
+            background: var(--glass);
+            width: 90%;
+            max-width: 350px;
+            padding: 18px;
+            margin: 10px 0;
+            border-radius: 15px;
+            cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: 0.3s;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.25rem;
+        }
+        .revealed { background: rgba(255, 77, 141, 0.2) !important; border-color: var(--accent-pink); }
+
+        .note-card {
+            background: white;
+            color: #333;
+            padding: 25px;
+            border-radius: 25px;
+            width: 85%;
+            max-width: 380px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 400px;
+        }
+
+        #typing-text {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.3rem;
+            line-height: 1.4;
+            color: #2d1b2d;
+            text-align: center;
+            white-space: pre-wrap;
+        }
+
+        #final-vow {
+            margin-top: 15px;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.6rem;
+            color: var(--accent-pink);
+            opacity: 0;
+            transition: opacity 2s ease;
+        }
+
+        .forgive-card {
+            background-color: var(--card-glass);
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            text-align: center;
+            max-width: 380px;
+            width: 90%;
+            z-index: 10;
+            position: relative;
+            backdrop-filter: blur(15px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1px solid rgba(255, 105, 180, 0.2);
+            overflow: hidden;
+        }
+
+        .expression-wrapper {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%) scale(1);
+            top: 20px;
+            font-size: 80px;
+            opacity: 1;
+            pointer-events: none;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 5;
+        }
+
+        .forgive-card h1 {
+            font-family: 'Dancing Script', cursive;
+            color: var(--accent-pink);
+            font-size: 2.5rem;
+            margin-top: 100px;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        #message {
+            color: var(--text-main);
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.4rem;
+            margin-bottom: 30px;
+            font-weight: 500;
+            min-height: 50px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .fade-out-text { opacity: 0; transform: translateY(-10px); transition: 0.4s; }
+
+        .forgive-btn {
+            background: linear-gradient(135deg, var(--btn-pink-start), var(--btn-pink-end));
+            border: none;
+            color: white;
+            padding: 15px 35px;
+            font-size: 1.1rem;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            transition: transform 0.2s;
+            font-weight: 700;
+            position: relative;
+            z-index: 15;
+        }
+
+        .floating-heart {
+            position: absolute;
+            font-size: 24px;
+            pointer-events: none;
+            z-index: 100;
+            animation: popUp 1s ease-out forwards;
+        }
+        @keyframes popUp {
+            0% { transform: scale(0) translateY(0); opacity: 1; }
+            100% { transform: scale(1.5) translateY(-100px); opacity: 0; }
+        }
+
+        video {
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            max-width: 100%;
+        }
+
+        /* STAGE 7: BACKDROP WALLPAPER STYLING & FADE EFFECT */
+        .wallpaper-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            z-index: 1;
+        }
+
+        .love-letter-container {
+            background: rgba(255, 255, 255, 0.95);
+            color: #2d1b2d;
+            border-radius: 25px;
+            padding: 25px;
+            width: 85%;
+            max-width: 400px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 3px double var(--accent-pink);
+            z-index: 2;
+            transition: opacity 3s ease-in-out, transform 3s ease-in-out;
+            opacity: 1;
+        }
+
+        /* Added beautiful styling for the inside image option */
+        .letter-img {
+            width: 100%;
+            max-height: 220px;
+            object-fit: cover;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+        }
+
+        /* Vanishing logic triggered by JS */
+        .love-letter-container.vanished {
+            opacity: 0;
+            transform: scale(0.85) translateY(30px);
+            pointer-events: none; 
+        }
+
+        .letter-content {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.4rem;
+            line-height: 1.5;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="stage1" class="screen">
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bmZueXpueGZ3bmZueXpueGZ3bmZueXpueGZ3bmZueXpueCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/MDJ9IbxxvDUQM/giphy.gif" class="cute-img">
+        <h1>Hey my small penguin 🐧</h1>
+        <button class="btn" onclick="startLoading()">Click here...</button>
+    </div>
+
+    <div id="stage2" class="screen hidden">
+        <p style="margin-bottom: 10px;" class="italian-handwriting">Measuring how much I miss you...</p>
+        <div id="percentage">0%</div>
+        <div class="progress-container">
+            <div class="progress-bar" id="bar"></div>
+        </div>
+        <p id="warning" style="margin-top: 20px; color: var(--accent-pink); opacity: 0; font-weight: bold;" class="italian-handwriting">⚠️ ERROR: MISSING YOU TOO MUCH</p>
+        <button id="continueBtn" class="btn hidden" style="margin-top: 20px;" onclick="goToReveal()">Continue ✨</button>
+    </div>
+
+    <div id="stage3" class="screen hidden">
+        <div style="margin-bottom: 20px;" class="italian-handwriting">🐧 Tap to hear me out...</div>
+        <div class="reveal-box" onclick="reveal(this, 'I am really, really sorry for being this. 🥺')"><span>❓</span></div>
+        <div class="reveal-box" onclick="reveal(this, 'Can we please cuddle and forget this happened? 🫂')"><span>❓</span></div>
+        <div class="reveal-box" onclick="reveal(this, 'You are the best thing that ever happened to me my small penguin. 💖')"><span>❓</span></div>
+        <button id="finalBtn" class="btn hidden" style="margin-top: 20px;" onclick="goToNote()">Click for a surprise ❤️</button>
+    </div>
+
+    <div id="stage4" class="screen hidden">
+        <p style="font-style: italic; margin-bottom: 15px;" class="italian-handwriting">A little note for you</p>
+        <div class="note-card">
+            <img src="gig.gif" width="110" style="margin-bottom: 15px; border-radius: 15px;">
+            <div id="typing-text"></div>
+            <div id="final-vow">I love you until my last breath 🧬💞🐧</div>
+            <button id="toFinalBtn" class="btn hidden" style="margin-top: 20px;" onclick="goToFinalStage()">One last thing... 🌸</button>
+        </div>
+    </div>
+
+    <div id="stage5" class="screen hidden">
+        <div class="forgive-card" id="card">
+            <div class="expression-wrapper" id="expression">🥺</div>
+            <h1>Forgive me? 🌸</h1>
+            <p id="message">I'm really sorry for what happened. I promise to make it up to you.</p>
+            <button class="forgive-btn" onclick="updateSorry(event)">Forgive Me? ✨</button>
+            <button id="yesBtn" class="btn hidden" style="margin-top: 20px; background: #4CAF50;" onclick="showVideo()">Yes, I Forgive You! 💖</button>
+        </div>
+    </div>
+
+    <!-- STAGE 6: FINAL VIDEO -->
+    <div id="stage6" class="screen hidden">
+        <div class="forgive-card" style="max-width: 600px;">
+            <h1 style="margin-top: 20px;">For You... 🐧❤️</h1>
+            <video id="finalVideo" width="100%" controls>
+                <source src="video.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <p style="margin-top: 20px; font-family: 'Dancing Script', cursive; font-size: 1.5rem; color: var(--accent-pink);">Always & Forever 🌸</p>
+        </div>
+    </div>
+
+    <!-- STAGE 7: FINAL BACKGROUND WALLPAPER, CONTAINER PICTURE & VANISHING NOTE -->
+    <div id="stage7" class="screen hidden">
+        <!-- WALLPAPER BACKGROUND: Replace 'our-wallpaper.jpg' with your main structural background image -->
+        <div class="wallpaper-bg" style="background-image: url('our-wallpaper.jpg');"></div>
+        
+        <!-- MAIN LETTER CONTAINER -->
+        <div class="love-letter-container" id="loveLetter">
+            <!-- INSIDE IMAGE: Replace 'inside-photo.jpg' with a cute picture of you two -->
+            <img src="our-wallpaper.jpg" alt="our-wallpaper" class="letter-img">
+            
+            <div class="letter-content">
+                To My Precious Small Penguin, ✨<br><br>
+                Thank you for your beautiful heart and for forgiving me. Having you in my life is my absolute greatest blessing like Jannat.<br><br>
+                No matter where life takes us, my heart belongs entirely to you. You are my home, my peace, and my choto bacha. 🧸💞
+                <br><br>
+                <span style="font-family: 'Caveat', cursive; font-size: 2.2rem; color: var(--accent-pink);">Always Yours... ❤️</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const bgLayer = document.body;
+        const icons = ['❤️', '💖', '🐧', '✨', '🌸', '🍔', '🍦', '🧸'];
+
+        for (let i = 0; i < 60; i++) {
+            let star = document.createElement('div');
+            star.className = 'star';
+            let size = Math.random() * 3 + 'px';
+            star.style.width = size; star.style.height = size;
+            star.style.top = Math.random() * 100 + 'vh';
+            star.style.left = Math.random() * 100 + 'vw';
+            star.style.animationDelay = Math.random() * 3 + 's';
+            bgLayer.appendChild(star);
+        }
+
+        function createDriftingIcons() {
+            setInterval(() => {
+                const icon = document.createElement('div');
+                icon.className = 'bg-emoji';
+                icon.innerText = icons[Math.floor(Math.random() * icons.length)];
+                icon.style.left = Math.random() * 100 + 'vw';
+                icon.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                bgLayer.appendChild(icon);
+                setTimeout(() => icon.remove(), 10000);
+            }, 800);
+        }
+        createDriftingIcons();
+
+        function startLoading() {
+            document.getElementById('stage1').classList.add('hidden');
+            document.getElementById('stage2').classList.remove('hidden');
+            let percent = 0;
+            let interval = setInterval(() => {
+                percent++;
+                document.getElementById('percentage').innerText = percent + "%";
+                document.getElementById('bar').style.width = (percent / 1.2) + "%";
+                if (percent === 100) document.getElementById('warning').style.opacity = 1;
+                if (percent >= 120) {
+                    clearInterval(interval);
+                    document.getElementById('continueBtn').classList.remove('hidden');
+                }
+            }, 35);
+        }
+
+        function goToReveal() {
+            document.getElementById('stage2').classList.add('hidden');
+            document.getElementById('stage3').classList.remove('hidden');
+        }
+
+        let count = 0;
+        function reveal(el, msg) {
+            if (!el.classList.contains('revealed')) {
+                el.innerHTML = `<span>${msg}</span>`;
+                el.classList.add('revealed');
+                count++;
+                if (count === 3) document.getElementById('finalBtn').classList.remove('hidden');
+            }
+        }
+
+        function goToNote() {
+            document.getElementById('stage3').classList.add('hidden');
+            document.getElementById('stage4').classList.remove('hidden');
+            startTyping();
+        }
+
+        function startTyping() {
+            const text = "I'm really sorry, my love. I accidentally upset the most precious and adorable days in my life with you. Because you are my everything💞.\nWithout you everything feels incomplete. Even rain gives no happiness,I'm just a person soaked in the cold rain🌧️. My ice cream 🍦 has no taste, even a KFC burger 🍔 is tasteless now. Everything feels useless and rough without you, my Baby Tayyaba. I know you are hurt and might think these are just excuses, but these are my true words, because 'TUM MERI ZINDAGI HO'. Me jesa bhi hun, sirf apka hun. Please mere choty bachy mere pass a jao🥺❤️ I promise I didn't mean to.🥺💕";
+            const container = document.getElementById('typing-text');
+            let i = 0;
+            function typeWriter() {
+                if (i < text.length) {
+                    container.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 40);
+                } else {
+                    document.getElementById('final-vow').style.opacity = 1;
+                    document.getElementById('toFinalBtn').classList.remove('hidden');
+                }
+            }
+            typeWriter();
+        }
+
+        function goToFinalStage() {
+            document.getElementById('stage4').classList.add('hidden');
+            document.getElementById('stage5').classList.remove('hidden');
+        }
+
+        const messages = [
+            "I'm truly sorry, let's start over? ✨",
+            "You're too special to be mad at me! 🥺",
+            "I'll buy you your favorite treats! 🍦",
+            "I miss your smile more than anything. 💖",
+            "Can I have one more chance? 🌹",
+            "I was wrong, and you were right. Always. 🧸",
+            "Sending you a million virtual hugs... 🫂",
+            "I'm a silly person for hurting you. Sorry! 🎈",
+            "You deserve the best, and I'll be better. 🎀"
+        ];
+
+        let lastIndex = -1;
+        let currentScale = 1.0;
+
+        function updateSorry(event) {
+            const expression = document.getElementById('expression');
+            const messageEl = document.getElementById('message');
+
+            currentScale += 0.25; 
+            expression.style.transform = `translateX(-50%) scale(${currentScale})`;
+
+            createHeart(event.clientX, event.clientY);
+
+            if (currentScale >= 2.0) {
+                document.getElementById('yesBtn').classList.remove('hidden');
+            }
+
+            messageEl.classList.add('fade-out-text');
+            setTimeout(() => {
+                let newIndex;
+                do {
+                    newIndex = Math.floor(Math.random() * messages.length);
+                } while (newIndex === lastIndex);
+                lastIndex = newIndex;
+                messageEl.innerText = messages[newIndex];
+                messageEl.classList.remove('fade-out-text');
+            }, 400);
+        }
+
+        function createHeart(x, y) {
+            const heart = document.createElement('div');
+            heart.className = 'floating-heart';
+            heart.innerText = '💗';
+            heart.style.left = x + 'px';
+            heart.style.top = (y - 20) + 'px';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 1000);
+        }
+
+        function showVideo() {
+            document.getElementById('stage5').classList.add('hidden');
+            document.getElementById('stage6').classList.remove('hidden');
+            const video = document.getElementById('finalVideo');
+            video.play();
+            
+            video.onended = function() {
+                document.getElementById('stage6').classList.add('hidden');
+                document.getElementById('stage7').classList.remove('hidden');
+                
+                // Card starts to fade out slowly after 13 seconds
+                setTimeout(() => {
+                    document.getElementById('loveLetter').classList.add('vanished');
+                }, 6000); 
+            };
+        }
+    </script>
+</body>
+</html>
